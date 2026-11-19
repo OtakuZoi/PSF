@@ -1,0 +1,1802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE // STUDY &amp; FOCUS OS</title>
+<style>
+/* =========================================================================
+   PULSE // STUDY & FOCUS OS — DESIGN TOKENS & CALM DARK SLATE THEME
+   Background: #0d1117 | Cards: #161b22 | Amber: #f59e0b | Emerald: #10b981
+   Primary Text: #e6edf3 | Secondary Text: #8b949e
+   Zero external fonts or CDN dependencies.
+========================================================================= */
+:root {
+    --bg-canvas: #0d1117;
+    --bg-card: #161b22;
+    --bg-elevated: #1c222c;
+    --bg-input: #0a0e14;
+    --border-subtle: rgba(240, 246, 252, 0.12);
+    --border-strong: rgba(240, 246, 252, 0.22);
+
+    --amber: #f59e0b;
+    --amber-soft: rgba(245, 158, 11, 0.14);
+    --amber-border: rgba(245, 158, 11, 0.45);
+
+    --emerald: #10b981;
+    --emerald-soft: rgba(16, 185, 129, 0.14);
+    --emerald-border: rgba(16, 185, 129, 0.45);
+
+    --sky: #38bdf8;
+    --sky-soft: rgba(56, 189, 248, 0.14);
+    --sky-border: rgba(56, 189, 248, 0.4);
+
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+.mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Top Navigation & Telemetry Strip */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(13, 17, 23, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.topbar-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+@media (min-width: 860px) {
+    .topbar-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 24px;
+    }
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-mark {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--emerald-soft);
+    border: 1px solid var(--emerald-border);
+    color: var(--emerald);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.brand-title {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+}
+
+.brand-title span {
+    color: var(--amber);
+}
+
+.brand-sub {
+    margin: 2px 0 0;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+.shortcut-hints {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+
+.kbd-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 6px;
+    padding: 4px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+kbd {
+    background: var(--bg-input);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--amber);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+}
+
+/* Main Workspace Layout */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px 18px 56px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 640px) {
+    .container {
+        padding: 24px 24px 64px;
+        gap: 24px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .workspace-grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 24px;
+        align-items: start;
+    }
+}
+
+.stack-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Cards */
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 640px) {
+    .card {
+        padding: 24px;
+    }
+}
+
+.card-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 18px;
+}
+
+.card-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--emerald);
+}
+
+.card-kicker.amber {
+    color: var(--amber);
+}
+
+.card-title {
+    margin: 3px 0 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.card-desc {
+    margin: 4px 0 0;
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+}
+
+/* Inputs & Buttons */
+label.field-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+}
+
+.input, .select, .textarea {
+    width: 100%;
+    background: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 9px 12px;
+    font-family: var(--font-sans);
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input.mono-field, .textarea.mono-field {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+    border-color: var(--emerald);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.14);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: var(--radius-sm);
+    padding: 9px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease, color 0.15s ease;
+    user-select: none;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn-emerald {
+    background: var(--emerald);
+    color: #06130e;
+    border-color: var(--emerald);
+}
+
+.btn-emerald:hover {
+    background: #34d399;
+}
+
+.btn-amber {
+    background: var(--amber);
+    color: #181002;
+    border-color: var(--amber);
+}
+
+.btn-amber:hover {
+    background: #fbbf24;
+}
+
+.btn-ghost {
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border-color: var(--border-subtle);
+}
+
+.btn-ghost:hover {
+    border-color: var(--border-strong);
+    background: #242c39;
+}
+
+.btn-ghost.active {
+    background: var(--emerald-soft);
+    border-color: var(--emerald-border);
+    color: var(--emerald);
+}
+
+.btn-sm {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+}
+
+/* =========================================================================
+   1. POMODORO & FOCUS TIMER
+========================================================================= */
+.preset-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.preset-btn {
+    background: var(--bg-input);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 7px 12px;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.preset-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+}
+
+.preset-btn.active {
+    background: var(--emerald-soft);
+    color: var(--emerald);
+    border-color: var(--emerald-border);
+}
+
+.timer-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 18px;
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+}
+
+.ring-wrap {
+    position: relative;
+    width: 184px;
+    height: 184px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ring-svg {
+    width: 184px;
+    height: 184px;
+    transform: rotate(-90deg);
+}
+
+.ring-track {
+    fill: none;
+    stroke: rgba(240, 246, 252, 0.08);
+    stroke-width: 10;
+}
+
+.ring-progress {
+    fill: none;
+    stroke: var(--emerald);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.25s linear, stroke 0.25s ease;
+}
+
+.ring-progress.break-mode {
+    stroke: var(--amber);
+}
+
+.ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.mode-badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--emerald-soft);
+    color: var(--emerald);
+    border: 1px solid var(--emerald-border);
+}
+
+.mode-badge.break-mode {
+    background: var(--amber-soft);
+    color: var(--amber);
+    border-color: var(--amber-border);
+}
+
+.time-readout {
+    font-family: var(--font-mono);
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 6px;
+    line-height: 1.1;
+}
+
+.session-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.linear-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    overflow: hidden;
+}
+
+.linear-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--emerald);
+    transition: width 0.25s linear, background-color 0.25s ease;
+}
+
+.linear-fill.break-mode {
+    background: var(--amber);
+}
+
+.custom-mins-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.timer-footer-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+}
+
+/* =========================================================================
+   2. STRUCTURED TASK & STUDY QUEUE
+========================================================================= */
+.task-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+@media (min-width: 640px) {
+    .task-form-grid {
+        grid-template-columns: 1fr 125px 100px auto;
+        align-items: end;
+    }
+}
+
+.filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.tab-group {
+    display: flex;
+    gap: 6px;
+}
+
+.task-list {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 2px;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 11px 12px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    transition: border-color 0.15s ease;
+}
+
+.task-item:hover {
+    border-color: var(--border-strong);
+}
+
+.task-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+}
+
+.task-check {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--emerald);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.task-title {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+.task-title.done {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+.task-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+.tag-core {
+    background: var(--emerald-soft);
+    color: var(--emerald);
+    border: 1px solid var(--emerald-border);
+}
+
+.tag-practice {
+    background: var(--amber-soft);
+    color: var(--amber);
+    border: 1px solid var(--amber-border);
+}
+
+.tag-review {
+    background: var(--sky-soft);
+    color: var(--sky);
+    border: 1px solid var(--sky-border);
+}
+
+.est-mins {
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+}
+
+.icon-del {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    padding: 4px 6px;
+    border-radius: 6px;
+}
+
+.icon-del:hover {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.12);
+}
+
+/* =========================================================================
+   3. QUICK FORMULA & CONCEPT FLASHCARD DECK
+========================================================================= */
+.flashcard-deck-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.flashcard-box {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    min-height: 175px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: border-color 0.18s ease, background-color 0.18s ease;
+}
+
+.flashcard-box:hover {
+    border-color: var(--amber-border);
+}
+
+.flashcard-box.is-back {
+    background: #111822;
+    border-color: var(--emerald-border);
+}
+
+.fc-topic-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+}
+
+.fc-prompt {
+    margin: 14px 0;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+}
+
+.fc-answer {
+    margin: 12px 0;
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    color: var(--emerald);
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    white-space: pre-wrap;
+}
+
+.fc-hint {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.fc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.add-card-details {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-subtle);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+@media (min-width: 640px) {
+    .add-card-details.two-col {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* =========================================================================
+   4. DAILY SESSION SUMMARY & SHAREABLE CARD
+========================================================================= */
+.summary-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.stat-tile {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 12px;
+    text-align: center;
+}
+
+.stat-num {
+    font-family: var(--font-mono);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--emerald);
+}
+
+.stat-num.amber {
+    color: var(--amber);
+}
+
+.stat-lbl {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+.share-preview {
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+.share-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    color: var(--amber);
+    margin-bottom: 8px;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 60;
+    background: var(--bg-elevated);
+    color: var(--text-primary);
+    border: 1px solid var(--emerald-border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<div id="toast" class="toast" role="status" aria-live="polite">Saved.</div>
+
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">
+            <div class="brand-mark">P//S</div>
+            <div>
+                <h1 class="brand-title">PULSE <span>//</span> STUDY &amp; FOCUS OS</h1>
+                <p class="brand-sub">Deep-work timer, structured study queue, active recall deck &amp; session export</p>
+            </div>
+        </div>
+        <div class="shortcut-hints">
+            <span class="kbd-chip"><kbd>Space</kbd> Start / Pause Timer</span>
+            <span class="kbd-chip"><kbd>N</kbd> New Study Task</span>
+            <span id="todayDateChip" class="kbd-chip mono" style="color:var(--emerald);">--</span>
+        </div>
+    </div>
+</header>
+
+<main class="container">
+    <div class="workspace-grid">
+        <!-- LEFT COLUMN: FOCUS TIMER + STUDY QUEUE -->
+        <div class="stack-col">
+            <!-- 1. FOCUS & POMODORO TIMER -->
+            <section class="card" aria-labelledby="timer-heading">
+                <div class="card-header">
+                    <div>
+                        <div class="card-kicker">01 // Focus &amp; Pomodoro Timer</div>
+                        <h2 id="timer-heading" class="card-title">Session Cadence &amp; Deep Work</h2>
+                        <p class="card-desc">Choose a preset or set custom minutes. Completed focus cycles log directly to your daily summary.</p>
+                    </div>
+                    <button id="chimeToggleBtn" type="button" class="btn btn-ghost btn-sm active" onclick="toggleChime()">
+                        🔔 Chime: ON
+                    </button>
+                </div>
+
+                <div class="preset-bar" role="group" aria-label="Timer presets">
+                    <button id="preset-25-5" type="button" class="preset-btn active" onclick="selectPreset(25, 5, '25-5')">25 / 5 Sprint</button>
+                    <button id="preset-50-10" type="button" class="preset-btn" onclick="selectPreset(50, 10, '50-10')">50 / 10 Deep</button>
+                    <button id="preset-90-15" type="button" class="preset-btn" onclick="selectPreset(90, 15, '90-15')">90 / 15 Ultradian</button>
+                    <button id="preset-custom" type="button" class="preset-btn" onclick="selectPreset(null, null, 'custom')">Custom</button>
+                </div>
+
+                <div class="timer-stage">
+                    <div class="ring-wrap">
+                        <svg class="ring-svg" viewBox="0 0 184 184" aria-hidden="true">
+                            <circle class="ring-track" cx="92" cy="92" r="80"></circle>
+                            <circle id="progressCircle" class="ring-progress" cx="92" cy="92" r="80"></circle>
+                        </svg>
+                        <div class="ring-center">
+                            <span id="modeBadge" class="mode-badge">FOCUS</span>
+                            <div id="timeDisplay" class="time-readout">25:00</div>
+                            <div id="cycleSubtext" class="session-meta">Session #1 • Ready</div>
+                        </div>
+                    </div>
+
+                    <div class="linear-track" aria-hidden="true">
+                        <div id="linearBarFill" class="linear-fill"></div>
+                    </div>
+
+                    <div class="btn-row" style="justify-content:center;">
+                        <button id="startPauseBtn" type="button" class="btn btn-emerald" onclick="toggleTimer()">▶ Start</button>
+                        <button type="button" class="btn btn-ghost" onclick="resetTimer()">↺ Reset</button>
+                        <button type="button" class="btn btn-amber" onclick="skipPhase()">⏭ Complete / Switch</button>
+                    </div>
+                </div>
+
+                <div class="custom-mins-grid">
+                    <div>
+                        <label for="focusMinsInput" class="field-label">Focus Minutes</label>
+                        <input id="focusMinsInput" type="number" min="1" max="180" value="25" class="input mono-field" onchange="applyCustomDurations()">
+                    </div>
+                    <div>
+                        <label for="breakMinsInput" class="field-label">Break Minutes</label>
+                        <input id="breakMinsInput" type="number" min="1" max="60" value="5" class="input mono-field" onchange="applyCustomDurations()">
+                    </div>
+                </div>
+
+                <div class="timer-footer-bar">
+                    <span style="color:var(--text-secondary);">Completed Focus Sessions: <strong id="completedSessionsCount" style="color:var(--emerald);">0</strong></span>
+                    <span style="color:var(--text-secondary);">Focus Logged Today: <strong id="focusMinutesBadge" style="color:var(--amber);">0 min</strong></span>
+                </div>
+            </section>
+
+            <!-- 2. STRUCTURED TASK & STUDY QUEUE -->
+            <section class="card" aria-labelledby="tasks-heading">
+                <div class="card-header">
+                    <div>
+                        <div class="card-kicker amber">02 // Structured Task &amp; Study Queue</div>
+                        <h2 id="tasks-heading" class="card-title">Study &amp; Build Queue</h2>
+                        <p class="card-desc">Tag items by priority, estimate time blocks, and check them off as you go.</p>
+                    </div>
+                    <button type="button" class="btn btn-ghost btn-sm" onclick="clearCompletedTasks()">Clear Done</button>
+                </div>
+
+                <form id="taskForm" class="task-form-grid" onsubmit="handleAddTask(event)">
+                    <div>
+                        <label for="taskTitleInput" class="field-label">Task / Topic</label>
+                        <input id="taskTitleInput" type="text" class="input" placeholder="e.g., Solve 10 integration-by-parts problems" required>
+                    </div>
+                    <div>
+                        <label for="taskTagSelect" class="field-label">Priority Tag</label>
+                        <select id="taskTagSelect" class="select mono-field">
+                            <option value="Core">Core</option>
+                            <option value="Practice">Practice</option>
+                            <option value="Review">Review</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="taskEstInput" class="field-label">Est. Mins</label>
+                        <input id="taskEstInput" type="number" min="5" max="300" step="5" value="25" class="input mono-field">
+                    </div>
+                    <button type="submit" class="btn btn-emerald">+ Add</button>
+                </form>
+
+                <div class="filter-tabs">
+                    <div class="tab-group" role="tablist" aria-label="Filter tasks">
+                        <button id="filter-all" type="button" class="btn btn-ghost btn-sm active" onclick="setTaskFilter('all')">All</button>
+                        <button id="filter-active" type="button" class="btn btn-ghost btn-sm" onclick="setTaskFilter('active')">Active</button>
+                        <button id="filter-done" type="button" class="btn btn-ghost btn-sm" onclick="setTaskFilter('done')">Done</button>
+                    </div>
+                    <span id="queueSummaryText" class="mono" style="font-size:0.74rem; color:var(--text-secondary);">0 active • 0 est. min</span>
+                </div>
+
+                <div id="taskList" class="task-list"></div>
+            </section>
+        </div>
+
+        <!-- RIGHT COLUMN: FLASHCARD DECK + DAILY SUMMARY & EXPORT -->
+        <div class="stack-col">
+            <!-- 3. QUICK FORMULA & CONCEPT FLASHCARD DECK -->
+            <section class="card" aria-labelledby="deck-heading">
+                <div class="card-header">
+                    <div>
+                        <div class="card-kicker">03 // Formula &amp; Concept Recall Deck</div>
+                        <h2 id="deck-heading" class="card-title">Active Recall &amp; Cheat Cards</h2>
+                        <p class="card-desc">Click any card to flip between prompt and formula/concept, rate recall, or add your own card.</p>
+                    </div>
+                    <button type="button" class="btn btn-ghost btn-sm" onclick="cycleFlashcard(1)">Next Card →</button>
+                </div>
+
+                <div class="flashcard-deck-meta">
+                    <span id="cardCounterLabel">Card 1 of 6</span>
+                    <span id="masteredCountLabel" style="color:var(--emerald);">Mastered: 0 / 6</span>
+                </div>
+
+                <div id="flashcardBox" class="flashcard-box" onclick="flipFlashcard()" tabindex="0" role="button" aria-label="Flip flashcard">
+                    <div>
+                        <div class="fc-topic-row">
+                            <span id="fcSubjectTag" class="tag tag-core">MATH</span>
+                            <span id="fcSideLabel" class="mono" style="color:var(--amber);">FRONT • PROMPT</span>
+                        </div>
+                        <div id="fcFrontText" class="fc-prompt">Loading card...</div>
+                        <div id="fcBackText" class="fc-answer" style="display:none;"></div>
+                    </div>
+                    <div class="fc-hint" id="fcHintText">Click card to reveal answer / formula</div>
+                </div>
+
+                <div class="fc-actions">
+                    <button type="button" class="btn btn-ghost btn-sm" onclick="flipFlashcard()">🔄 Flip</button>
+                    <button type="button" class="btn btn-emerald btn-sm" onclick="rateCurrentCard(true)">✓ Got It</button>
+                    <button type="button" class="btn btn-amber btn-sm" onclick="rateCurrentCard(false)">↺ Review Again</button>
+                </div>
+
+                <form id="addCardForm" class="add-card-details" onsubmit="handleAddFlashcard(event)">
+                    <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--text-secondary); text-transform:uppercase;">
+                        + Add Custom Study Card
+                    </div>
+                    <div class="add-card-details two-col" style="margin-top:0; padding-top:0; border:none;">
+                        <div>
+                            <label for="newCardSubject" class="field-label">Subject / Tag</label>
+                            <input id="newCardSubject" type="text" class="input" placeholder="e.g., Physics / SQL / Bio" maxlength="24">
+                        </div>
+                        <div>
+                            <label for="newCardFront" class="field-label">Question or Prompt</label>
+                            <input id="newCardFront" type="text" class="input" placeholder="e.g., Big-O of binary search?" required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="newCardBack" class="field-label">Formula, Definition, or Solution</label>
+                        <input id="newCardBack" type="text" class="input mono-field" placeholder="e.g., O(log n) time, O(1) space" required>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-ghost btn-sm">+ Save Card to Deck</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- 4. DAILY SESSION SUMMARY & SHAREABLE CARD -->
+            <section class="card" aria-labelledby="summary-heading">
+                <div class="card-header">
+                    <div>
+                        <div class="card-kicker amber">04 // Daily Session Summary &amp; Share</div>
+                        <h2 id="summary-heading" class="card-title">Session Recap &amp; Export</h2>
+                        <p class="card-desc">Tracks your focus minutes, completed tasks, and mastered cards—ready to paste into Markdown or Discord.</p>
+                    </div>
+                </div>
+
+                <div class="summary-stats-grid">
+                    <div class="stat-tile">
+                        <div id="sumFocusMins" class="stat-num">0m</div>
+                        <div class="stat-lbl">Focus Time</div>
+                    </div>
+                    <div class="stat-tile">
+                        <div id="sumTasksDone" class="stat-num amber">0</div>
+                        <div class="stat-lbl">Tasks Done</div>
+                    </div>
+                    <div class="stat-tile">
+                        <div id="sumCardsMastered" class="stat-num">0</div>
+                        <div class="stat-lbl">Cards Got It</div>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:12px;">
+                    <label for="sessionNoteInput" class="field-label">Session Headline / Takeaway</label>
+                    <input id="sessionNoteInput" type="text" class="input" placeholder="e.g., Wrapped up graph traversal drills and steady recall." oninput="renderExportBlock()">
+                </div>
+
+                <div class="share-preview">
+                    <div class="share-heading">
+                        <span id="exportFormatLabel">MARKDOWN / DISCORD SUMMARY BLOCK</span>
+                        <div class="tab-group">
+                            <button id="fmt-markdown" type="button" class="btn btn-ghost btn-sm active" onclick="setExportFormat('markdown')">Markdown</button>
+                            <button id="fmt-discord" type="button" class="btn btn-ghost btn-sm" onclick="setExportFormat('discord')">Discord</button>
+                        </div>
+                    </div>
+                    <textarea id="exportTextarea" rows="8" class="textarea mono-field" readonly></textarea>
+                </div>
+
+                <div class="btn-row">
+                    <button type="button" class="btn btn-amber" onclick="copySummaryExport()">📋 Copy Summary</button>
+                    <button type="button" class="btn btn-ghost" onclick="resetDailyMetrics()">Reset Today</button>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<script>
+/* =========================================================================
+   STORAGE KEYS & DEFAULT DATA
+========================================================================= */
+const STORAGE_KEY = "pulse_study_os_v1";
+
+const DEFAULT_FLASHCARDS = [
+    {
+        id: "fc-1",
+        subject: "Calculus",
+        front: "Chain Rule for composite function f(g(x))",
+        back: "d/dx [ f(g(x)) ] = f'(g(x)) · g'(x)",
+        mastered: false
+    },
+    {
+        id: "fc-2",
+        subject: "Algorithms",
+        front: "Merge Sort vs. Quick Sort average time complexity",
+        back: "Both average O(n log n); Merge Sort guarantees worst-case O(n log n) with O(n) space.",
+        mastered: false
+    },
+    {
+        id: "fc-3",
+        subject: "Physics",
+        front: "Newton's Second Law & Kinetic Energy relation",
+        back: "F = m·a   |   KE = ½·m·v² = p² / (2m)",
+        mastered: false
+    },
+    {
+        id: "fc-4",
+        subject: "Probability",
+        front: "Bayes' Theorem formula",
+        back: "P(A | B) = [ P(B | A) · P(A) ] / P(B)",
+        mastered: false
+    },
+    {
+        id: "fc-5",
+        subject: "Systems",
+        front: "TCP 3-way handshake sequence",
+        back: "1. Client → Server: SYN\n2. Server → Client: SYN-ACK\n3. Client → Server: ACK",
+        mastered: false
+    },
+    {
+        id: "fc-6",
+        subject: "Study Science",
+        front: "Why spaced repetition + active recall beats re-reading",
+        back: "Retrieving an answer right before forgetting strengthens long-term memory traces and exposes gaps.",
+        mastered: false
+    }
+];
+
+const DEFAULT_TASKS = [
+    { id: "t-1", title: "Review lecture notes & highlight key theorems", tag: "Review", estMins: 20, done: false },
+    { id: "t-2", title: "Complete core problem set #3", tag: "Core", estMins: 45, done: false },
+    { id: "t-3", title: "Run 15 timed practice questions", tag: "Practice", estMins: 25, done: false }
+];
+
+function getTodayStamp() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, "0");
+    const d = String(now.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+}
+
+function createInitialState() {
+    return {
+        date: getTodayStamp(),
+        timer: {
+            presetId: "25-5",
+            focusMinutes: 25,
+            breakMinutes: 5,
+            phase: "focus", // "focus" | "break"
+            remainingSec: 25 * 60,
+            running: false,
+            completedFocusSessions: 0,
+            focusMinutesLogged: 0,
+            chimeEnabled: true
+        },
+        taskFilter: "all",
+        tasks: DEFAULT_TASKS.slice(),
+        cardIndex: 0,
+        cardFlipped: false,
+        flashcards: DEFAULT_FLASHCARDS.map(c => ({ ...c })),
+        sessionNote: "",
+        exportFormat: "markdown"
+    };
+}
+
+let state = loadState();
+let timerInterval = null;
+
+function loadState() {
+    const fresh = createInitialState();
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return fresh;
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== "object") return fresh;
+
+        // Reset daily session tallies if calendar day changed
+        const today = getTodayStamp();
+        const sameDay = parsed.date === today;
+
+        const merged = {
+            ...fresh,
+            ...parsed,
+            date: today,
+            timer: {
+                ...fresh.timer,
+                ...(parsed.timer || {}),
+                running: false,
+                completedFocusSessions: sameDay ? ((parsed.timer && parsed.timer.completedFocusSessions) || 0) : 0,
+                focusMinutesLogged: sameDay ? ((parsed.timer && parsed.timer.focusMinutesLogged) || 0) : 0
+            },
+            tasks: Array.isArray(parsed.tasks) && parsed.tasks.length ? parsed.tasks : fresh.tasks,
+            flashcards: Array.isArray(parsed.flashcards) && parsed.flashcards.length ? parsed.flashcards : fresh.flashcards,
+            sessionNote: sameDay ? (parsed.sessionNote || "") : ""
+        };
+
+        // Clamp remainingSec to valid bounds
+        const maxSec = (merged.timer.phase === "focus" ? merged.timer.focusMinutes : merged.timer.breakMinutes) * 60;
+        if (typeof merged.timer.remainingSec !== "number" || merged.timer.remainingSec <= 0 || merged.timer.remainingSec > maxSec) {
+            merged.timer.remainingSec = maxSec;
+        }
+        if (merged.cardIndex >= merged.flashcards.length) {
+            merged.cardIndex = 0;
+        }
+        return merged;
+    } catch (_err) {
+        return fresh;
+    }
+}
+
+function saveState() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (_err) {
+        // Ignore storage quota or private-mode errors
+    }
+}
+
+/* =========================================================================
+   WEB AUDIO API SYNTH CHIME (NO EXTERNAL AUDIO FILES)
+========================================================================= */
+function playSessionChime(isFocusComplete) {
+    if (!state.timer.chimeEnabled) return;
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const now = ctx.currentTime;
+
+        const notes = isFocusComplete ? [523.25, 659.25, 783.99] : [659.25, 523.25];
+        notes.forEach((freq, idx) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+
+            gain.gain.setValueAtTime(0.0001, now + idx * 0.14);
+            gain.gain.exponentialRampToValueAtTime(0.12, now + idx * 0.14 + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.14 + 0.42);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + idx * 0.14);
+            osc.stop(now + idx * 0.14 + 0.45);
+        });
+
+        setTimeout(() => {
+            ctx.close().catch(() => {});
+        }, 1200);
+    } catch (_err) {
+        // Audio blocked or unsupported
+    }
+}
+
+function toggleChime() {
+    state.timer.chimeEnabled = !state.timer.chimeEnabled;
+    const btn = document.getElementById("chimeToggleBtn");
+    btn.textContent = state.timer.chimeEnabled ? "🔔 Chime: ON" : "🔕 Chime: OFF";
+    btn.classList.toggle("active", state.timer.chimeEnabled);
+    saveState();
+    showToast(state.timer.chimeEnabled ? "Audio chime enabled." : "Audio chime muted.");
+}
+
+/* =========================================================================
+   1. POMODORO & FOCUS TIMER LOGIC
+========================================================================= */
+const RING_RADIUS = 80;
+const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
+
+function selectPreset(focusMin, breakMin, presetId) {
+    pauseTimerInternal();
+    state.timer.presetId = presetId;
+
+    if (typeof focusMin === "number" && typeof breakMin === "number") {
+        state.timer.focusMinutes = focusMin;
+        state.timer.breakMinutes = breakMin;
+        document.getElementById("focusMinsInput").value = focusMin;
+        document.getElementById("breakMinsInput").value = breakMin;
+    }
+
+    state.timer.phase = "focus";
+    state.timer.remainingSec = state.timer.focusMinutes * 60;
+    syncPresetButtons();
+    renderTimerUI();
+    saveState();
+}
+
+function applyCustomDurations() {
+    const fVal = Math.max(1, Math.min(180, parseInt(document.getElementById("focusMinsInput").value, 10) || 25));
+    const bVal = Math.max(1, Math.min(60, parseInt(document.getElementById("breakMinsInput").value, 10) || 5));
+
+    document.getElementById("focusMinsInput").value = fVal;
+    document.getElementById("breakMinsInput").value = bVal;
+
+    pauseTimerInternal();
+    state.timer.presetId = "custom";
+    state.timer.focusMinutes = fVal;
+    state.timer.breakMinutes = bVal;
+    state.timer.phase = "focus";
+    state.timer.remainingSec = fVal * 60;
+    syncPresetButtons();
+    renderTimerUI();
+    saveState();
+}
+
+function syncPresetButtons() {
+    const ids = ["25-5", "50-10", "90-15", "custom"];
+    ids.forEach(id => {
+        const el = document.getElementById(`preset-${id}`);
+        if (el) el.classList.toggle("active", state.timer.presetId === id);
+    });
+}
+
+function toggleTimer() {
+    if (state.timer.running) {
+        pauseTimerInternal();
+        saveState();
+        renderTimerUI();
+    } else {
+        state.timer.running = true;
+        timerInterval = setInterval(tickTimer, 1000);
+        renderTimerUI();
+    }
+}
+
+function pauseTimerInternal() {
+    state.timer.running = false;
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
+
+function resetTimer() {
+    pauseTimerInternal();
+    const mins = state.timer.phase === "focus" ? state.timer.focusMinutes : state.timer.breakMinutes;
+    state.timer.remainingSec = mins * 60;
+    renderTimerUI();
+    saveState();
+    showToast("Timer reset.");
+}
+
+function skipPhase() {
+    completeCurrentPhase(true);
+}
+
+function tickTimer() {
+    if (!state.timer.running) return;
+    if (state.timer.remainingSec > 1) {
+        state.timer.remainingSec -= 1;
+        renderTimerUI();
+    } else {
+        state.timer.remainingSec = 0;
+        completeCurrentPhase(false);
+    }
+}
+
+function completeCurrentPhase(wasSkipped) {
+    pauseTimerInternal();
+    const wasFocus = state.timer.phase === "focus";
+
+    if (wasFocus) {
+        state.timer.completedFocusSessions += 1;
+        state.timer.focusMinutesLogged += state.timer.focusMinutes;
+        playSessionChime(true);
+        showToast(
+            wasSkipped
+                ? `Logged +${state.timer.focusMinutes}m focus • Break ready.`
+                : `Focus complete! +${state.timer.focusMinutes}m logged.`,
+            "✓"
+        );
+        state.timer.phase = "break";
+        state.timer.remainingSec = state.timer.breakMinutes * 60;
+    } else {
+        playSessionChime(false);
+        showToast("Break finished • Ready for next focus block.", "⚡");
+        state.timer.phase = "focus";
+        state.timer.remainingSec = state.timer.focusMinutes * 60;
+    }
+
+    renderTimerUI();
+    renderSummary();
+    saveState();
+}
+
+function formatMMSS(totalSec) {
+    const safe = Math.max(0, Math.floor(totalSec));
+    const mins = Math.floor(safe / 60);
+    const secs = safe % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+
+function renderTimerUI() {
+    const isFocus = state.timer.phase === "focus";
+    const totalSec = (isFocus ? state.timer.focusMinutes : state.timer.breakMinutes) * 60;
+    const elapsedSec = Math.max(0, totalSec - state.timer.remainingSec);
+    const ratio = totalSec > 0 ? Math.min(1, Math.max(0, elapsedSec / totalSec)) : 0;
+
+    const circle = document.getElementById("progressCircle");
+    circle.style.strokeDasharray = String(RING_CIRCUMFERENCE);
+    circle.style.strokeDashoffset = String(RING_CIRCUMFERENCE * (1 - ratio));
+    circle.classList.toggle("break-mode", !isFocus);
+
+    const linearBar = document.getElementById("linearBarFill");
+    linearBar.style.width = `${(ratio * 100).toFixed(1)}%`;
+    linearBar.classList.toggle("break-mode", !isFocus);
+
+    const badge = document.getElementById("modeBadge");
+    badge.textContent = isFocus ? "FOCUS" : "BREAK";
+    badge.classList.toggle("break-mode", !isFocus);
+
+    document.getElementById("timeDisplay").textContent = formatMMSS(state.timer.remainingSec);
+
+    const sessionNum = state.timer.completedFocusSessions + (isFocus ? 1 : 0);
+    const statusWord = state.timer.running ? "Running" : "Paused";
+    document.getElementById("cycleSubtext").textContent = `Session #${sessionNum} • ${statusWord}`;
+
+    const startBtn = document.getElementById("startPauseBtn");
+    startBtn.textContent = state.timer.running ? "❚❚ Pause" : "▶ Start";
+
+    document.getElementById("completedSessionsCount").textContent = String(state.timer.completedFocusSessions);
+    document.getElementById("focusMinutesBadge").textContent = `${state.timer.focusMinutesLogged} min`;
+}
+
+/* =========================================================================
+   2. STRUCTURED TASK & STUDY QUEUE LOGIC
+========================================================================= */
+function handleAddTask(event) {
+    event.preventDefault();
+    const titleEl = document.getElementById("taskTitleInput");
+    const tagEl = document.getElementById("taskTagSelect");
+    const estEl = document.getElementById("taskEstInput");
+
+    const title = titleEl.value.trim();
+    if (!title) return;
+
+    const tag = tagEl.value || "Core";
+    const estMins = Math.max(5, Math.min(300, parseInt(estEl.value, 10) || 25));
+
+    state.tasks.unshift({
+        id: `t-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+        title,
+        tag,
+        estMins,
+        done: false
+    });
+
+    titleEl.value = "";
+    renderTasks();
+    renderSummary();
+    saveState();
+    showToast("Task added to queue.");
+}
+
+function toggleTaskDone(id) {
+    const item = state.tasks.find(t => t.id === id);
+    if (!item) return;
+    item.done = !item.done;
+    renderTasks();
+    renderSummary();
+    saveState();
+}
+
+function deleteTask(id) {
+    state.tasks = state.tasks.filter(t => t.id !== id);
+    renderTasks();
+    renderSummary();
+    saveState();
+}
+
+function clearCompletedTasks() {
+    const before = state.tasks.length;
+    state.tasks = state.tasks.filter(t => !t.done);
+    if (state.tasks.length < before) {
+        renderTasks();
+        renderSummary();
+        saveState();
+        showToast("Cleared completed tasks.");
+    }
+}
+
+function setTaskFilter(filterName) {
+    state.taskFilter = filterName;
+    ["all", "active", "done"].forEach(f => {
+        const btn = document.getElementById(`filter-${f}`);
+        if (btn) btn.classList.toggle("active", state.taskFilter === f);
+    });
+    renderTasks();
+    saveState();
+}
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+}
+
+function renderTasks() {
+    const listEl = document.getElementById("taskList");
+    const activeTasks = state.tasks.filter(t => !t.done);
+    const doneTasks = state.tasks.filter(t => t.done);
+    const activeMins = activeTasks.reduce((sum, t) => sum + (Number(t.estMins) || 0), 0);
+
+    document.getElementById("queueSummaryText").textContent =
+        `${activeTasks.length} active • ${doneTasks.length} done • ${activeMins} est. min`;
+
+    let filtered = state.tasks;
+    if (state.taskFilter === "active") filtered = activeTasks;
+    if (state.taskFilter === "done") filtered = doneTasks;
+
+    if (filtered.length === 0) {
+        listEl.innerHTML = `<div style="padding:18px; text-align:center; font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted);">No tasks in this view.</div>`;
+        return;
+    }
+
+    listEl.innerHTML = filtered.map(task => {
+        const tagClass =
+            task.tag === "Practice" ? "tag-practice" :
+            task.tag === "Review" ? "tag-review" : "tag-core";
+        return `
+            <div class="task-item">
+                <div class="task-left">
+                    <input
+                        type="checkbox"
+                        class="task-check"
+                        ${task.done ? "checked" : ""}
+                        onchange="toggleTaskDone('${escapeHtml(task.id)}')"
+                        aria-label="Mark ${escapeHtml(task.title)} as ${task.done ? "active" : "done"}"
+                    >
+                    <span class="task-title ${task.done ? "done" : ""}">${escapeHtml(task.title)}</span>
+                </div>
+                <div class="task-right">
+                    <span class="tag ${tagClass}">${escapeHtml(task.tag)}</span>
+                    <span class="est-mins">${Number(task.estMins) || 0}m</span>
+                    <button type="button" class="icon-del" onclick="deleteTask('${escapeHtml(task.id)}')" title="Remove task" aria-label="Remove task">✕</button>
+                </div>
+            </div>
+        `;
+    }).join("");
+}
+
+/* =========================================================================
+   3. FLASHCARD & CHEAT-SHEET DECK LOGIC
+========================================================================= */
+function renderFlashcard() {
+    const deck = state.flashcards;
+    if (!deck.length) return;
+
+    if (state.cardIndex < 0) state.cardIndex = deck.length - 1;
+    if (state.cardIndex >= deck.length) state.cardIndex = 0;
+
+    const card = deck[state.cardIndex];
+    const masteredTotal = deck.filter(c => c.mastered).length;
+
+    document.getElementById("cardCounterLabel").textContent = `Card ${state.cardIndex + 1} of ${deck.length}`;
+    document.getElementById("masteredCountLabel").textContent = `Mastered: ${masteredTotal} / ${deck.length}`;
+
+    const subjEl = document.getElementById("fcSubjectTag");
+    subjEl.textContent = card.subject || "NOTE";
+    subjEl.className = card.mastered ? "tag tag-core" : "tag tag-practice";
+
+    const box = document.getElementById("flashcardBox");
+    const sideLabel = document.getElementById("fcSideLabel");
+    const frontEl = document.getElementById("fcFrontText");
+    const backEl = document.getElementById("fcBackText");
+    const hintEl = document.getElementById("fcHintText");
+
+    frontEl.textContent = card.front;
+    backEl.textContent = card.back;
+
+    if (state.cardFlipped) {
+        box.classList.add("is-back");
+        sideLabel.textContent = "BACK • ANSWER / FORMULA";
+        sideLabel.style.color = "var(--emerald)";
+        backEl.style.display = "block";
+        hintEl.textContent = "Click card to return to prompt • Rate below";
+    } else {
+        box.classList.remove("is-back");
+        sideLabel.textContent = card.mastered ? "FRONT • MASTERED ✓" : "FRONT • PROMPT";
+        sideLabel.style.color = card.mastered ? "var(--emerald)" : "var(--amber)";
+        backEl.style.display = "none";
+        hintEl.textContent = "Click card to reveal answer / formula";
+    }
+}
+
+function flipFlashcard() {
+    state.cardFlipped = !state.cardFlipped;
+    renderFlashcard();
+}
+
+function cycleFlashcard(step) {
+    if (!state.flashcards.length) return;
+    state.cardIndex = (state.cardIndex + step + state.flashcards.length) % state.flashcards.length;
+    state.cardFlipped = false;
+    renderFlashcard();
+    saveState();
+}
+
+function rateCurrentCard(gotIt) {
+    const card = state.flashcards[state.cardIndex];
+    if (!card) return;
+    card.mastered = Boolean(gotIt);
+    state.cardFlipped = false;
+    state.cardIndex = (state.cardIndex + 1) % state.flashcards.length;
+    renderFlashcard();
+    renderSummary();
+    saveState();
+    showToast(gotIt ? "Marked as Got It!" : "Queued for Review Again.");
+}
+
+function handleAddFlashcard(event) {
+    event.preventDefault();
+    const subjInput = document.getElementById("newCardSubject");
+    const frontInput = document.getElementById("newCardFront");
+    const backInput = document.getElementById("newCardBack");
+
+    const front = frontInput.value.trim();
+    const back = backInput.value.trim();
+    const subject = (subjInput.value.trim() || "Custom").slice(0, 24);
+
+    if (!front || !back) return;
+
+    state.flashcards.push({
+        id: `fc-${Date.now()}`,
+        subject,
+        front,
+        back,
+        mastered: false
+    });
+
+    state.cardIndex = state.flashcards.length - 1;
+    state.cardFlipped = false;
+
+    subjInput.value = "";
+    frontInput.value = "";
+    backInput.value = "";
+
+    renderFlashcard();
+    renderSummary();
+    saveState();
+    showToast("Added new card to deck.");
+}
+
+/* =========================================================================
+   4. DAILY SESSION SUMMARY & SHAREABLE BLOCK
+========================================================================= */
+function setExportFormat(fmt) {
+    state.exportFormat = fmt === "discord" ? "discord" : "markdown";
+    document.getElementById("fmt-markdown").classList.toggle("active", state.exportFormat === "markdown");
+    document.getElementById("fmt-discord").classList.toggle("active", state.exportFormat === "discord");
+    document.getElementById("exportFormatLabel").textContent =
+        state.exportFormat === "discord" ? "DISCORD CODE BLOCK PREVIEW" : "MARKDOWN SUMMARY PREVIEW";
+    renderExportBlock();
+    saveState();
+}
+
+function renderSummary() {
+    const focusMins = state.timer.focusMinutesLogged;
+    const completedTasks = state.tasks.filter(t => t.done);
+    const masteredCards = state.flashcards.filter(c => c.mastered);
+
+    document.getElementById("sumFocusMins").textContent = `${focusMins}m`;
+    document.getElementById("sumTasksDone").textContent = String(completedTasks.length);
+    document.getElementById("sumCardsMastered").textContent = String(masteredCards.length);
+
+    renderExportBlock();
+}
+
+function renderExportBlock() {
+    const noteInput = document.getElementById("sessionNoteInput");
+    state.sessionNote = noteInput.value;
+
+    const focusMins = state.timer.focusMinutesLogged;
+    const sessions = state.timer.completedFocusSessions;
+    const doneTasks = state.tasks.filter(t => t.done);
+    const masteredCards = state.flashcards.filter(c => c.mastered);
+    const note = state.sessionNote.trim() || "Steady focus & active recall session.";
+
+    const taskPreview = doneTasks.length
+        ? doneTasks.slice(0, 4).map(t => `• ${t.title} (${t.tag}, ${t.estMins}m)`).join("\n")
+        : "• No tasks checked off yet";
+
+    let text = "";
+    if (state.exportFormat === "discord") {
+        text = [
+            "```ansi",
+            "\u001b[1;32mPULSE // STUDY & FOCUS OS\u001b[0m \u001b[1;33m[" + state.date + "]\u001b[0m",
+            `Focus Time : ${focusMins} min (${sessions} completed session${sessions === 1 ? "" : "s"})`,
+            `Tasks Done : ${doneTasks.length} / ${state.tasks.length}`,
+            `Recall Got : ${masteredCards.length} / ${state.flashcards.length} cards`,
+            `Takeaway   : ${note}`,
+            "```"
+        ].join("\n");
+    } else {
+        text = [
+            `### PULSE // Study Recap (${state.date})`,
+            `- **Focus Time:** ${focusMins} min (${sessions} sessions)`,
+            `- **Tasks Completed:** ${doneTasks.length}/${state.tasks.length}`,
+            `- **Cards Mastered:** ${masteredCards.length}/${state.flashcards.length}`,
+            `- **Takeaway:** ${note}`,
+            "",
+            "**Completed Items:**",
+            taskPreview
+        ].join("\n");
+    }
+
+    document.getElementById("exportTextarea").value = text;
+}
+
+function copySummaryExport() {
+    const ta = document.getElementById("exportTextarea");
+    const val = ta.value;
+    if (!val) return;
+
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+        navigator.clipboard.writeText(val).then(
+            () => showToast("Summary copied to clipboard!", "📋"),
+            () => fallbackCopyTextarea(ta)
+        );
+    } else {
+        fallbackCopyTextarea(ta);
+    }
+}
+
+function fallbackCopyTextarea(el) {
+    el.focus();
+    el.select();
+    try {
+        document.execCommand("copy");
+        showToast("Summary copied to clipboard!", "📋");
+    } catch (_err) {
+        showToast("Select text and press Ctrl/Cmd + C.");
+    }
+}
+
+function resetDailyMetrics() {
+    pauseTimerInternal();
+    state.timer.completedFocusSessions = 0;
+    state.timer.focusMinutesLogged = 0;
+    state.timer.phase = "focus";
+    state.timer.remainingSec = state.timer.focusMinutes * 60;
+    state.sessionNote = "";
+    document.getElementById("sessionNoteInput").value = "";
+    state.flashcards.forEach(c => { c.mastered = false; });
+
+    renderTimerUI();
+    renderFlashcard();
+    renderSummary();
+    saveState();
+    showToast("Today's session counters reset.");
+}
+
+/* =========================================================================
+   TOAST & KEYBOARD SHORTCUTS
+========================================================================= */
+let toastTimer = null;
+function showToast(message, prefix = "•") {
+    const el = document.getElementById("toast");
+    el.textContent = `${prefix} ${message}`;
+    el.classList.add("show");
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+        el.classList.remove("show");
+    }, 2200);
+}
+
+document.addEventListener("keydown", (event) => {
+    const tag = document.activeElement ? document.activeElement.tagName.toLowerCase() : "";
+    const isTyping = tag === "input" || tag === "textarea" || tag === "select" || (document.activeElement && document.activeElement.isContentEditable);
+
+    if (event.code === "Space" && !isTyping) {
+        event.preventDefault();
+        toggleTimer();
+    } else if ((event.key === "n" || event.key === "N") && !isTyping && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        event.preventDefault();
+        const taskInput = document.getElementById("taskTitleInput");
+        if (taskInput) {
+            taskInput.focus();
+            taskInput.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+    }
+});
+
+/* =========================================================================
+   INITIALIZATION
+========================================================================= */
+window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("todayDateChip").textContent = state.date;
+    document.getElementById("focusMinsInput").value = state.timer.focusMinutes;
+    document.getElementById("breakMinsInput").value = state.timer.breakMinutes;
+    document.getElementById("sessionNoteInput").value = state.sessionNote || "";
+
+    const chimeBtn = document.getElementById("chimeToggleBtn");
+    chimeBtn.textContent = state.timer.chimeEnabled ? "🔔 Chime: ON" : "🔕 Chime: OFF";
+    chimeBtn.classList.toggle("active", state.timer.chimeEnabled);
+
+    ["all", "active", "done"].forEach(f => {
+        const btn = document.getElementById(`filter-${f}`);
+        if (btn) btn.classList.toggle("active", state.taskFilter === f);
+    });
+
+    document.getElementById("fmt-markdown").classList.toggle("active", state.exportFormat === "markdown");
+    document.getElementById("fmt-discord").classList.toggle("active", state.exportFormat === "discord");
+    document.getElementById("exportFormatLabel").textContent =
+        state.exportFormat === "discord" ? "DISCORD CODE BLOCK PREVIEW" : "MARKDOWN SUMMARY PREVIEW";
+
+    syncPresetButtons();
+    renderTimerUI();
+    renderTasks();
+    renderFlashcard();
+    renderSummary();
+});
+</script>
+</body>
+</html>
